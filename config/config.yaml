@@ -1,0 +1,93 @@
+# Project Configuration
+project:
+  name: "bovw-gcn-resisc45"
+  version: "0.1.0"
+  seed: 42
+
+# Dataset Configuration
+dataset:
+  name: "resisc45"
+  root: "data/raw/NWPU-RESISC45"
+  num_classes: 45
+  image_size: [256, 256]
+  train_split: 0.6
+  val_split: 0.2
+  test_split: 0.2
+  
+# Data Loading
+dataloader:
+  batch_size: 24
+  num_workers: 4
+  drop_last: true
+  pin_memory: true
+
+# Superpixel Configuration
+superpixel:
+  n_segments: 1500
+  compactness: 10
+  max_iter: 20
+  sigma: 5
+  min_size_factor: 0.3
+  max_size_factor: 2.0
+
+# Graph Construction
+graph:
+  sigma: 12
+  distance_threshold: 9
+  feature_threshold: 0.15
+  k_neighbors: 7
+
+# Model Configuration
+model:
+  type: "CEGCN"
+  input_channels: 3
+  gcn_layers: 2
+  hidden_dims: [512, 256, 128]
+  dropout: 0.3
+  use_attention: true
+
+# Training Configuration
+training:
+  epochs: 500
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-5
+  optimizer: "AdamW"
+  scheduler: "ReduceLROnPlateau"
+  scheduler_params:
+    mode: "min"
+    patience: 5
+    factor: 0.5
+  gradient_clip: 1.0
+  checkpoint_interval: 10
+  early_stopping_patience: 20
+
+# BoVW Configuration
+bovw:
+  num_clusters: 1000
+  kmeans_batch_size: 32
+  kmeans_n_init: 3
+  classifier: "random_forest"
+  classifier_params:
+    n_estimators: 100
+    random_state: 42
+
+# Paths
+paths:
+  data_root: "data"
+  checkpoints: "checkpoints"
+  experiments: "experiments"
+  outputs: "outputs"
+  logs: "outputs/logs"
+
+# Logging
+logging:
+  level: "INFO"
+  use_tensorboard: true
+  use_wandb: false
+  save_frequency: 100
+
+# Hardware
+device:
+  use_cuda: true
+  gpu_ids: [0]
+  mixed_precision: false
