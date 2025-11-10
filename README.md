@@ -6,15 +6,17 @@
 
 Bag of Visual Words Feature Extraction Using CNN and GCN for Remote Sensing Image Classification. A complete research-grade implementation combining Convolutional Neural Networks (CNNs) and Graph Convolutional Networks (GCNs) in a Bag-of-Visual-Words (BoVW) framework for robust image representation and classification.
    
-   ## Project Status
-   🚧 Under Development
-   
-   ## Dataset
-   NWPU-RESISC45
-   
-   ## Architecture
-   ResNet50 + GCN + Superpixel Segmentation + BoVW
-   
+   ## 🧩 BOVW Architecture Diagram
+   Below is a detailed conceptual overview of the **BoVW-GCN model** architecture:
+
+![BOVW-GCN Workflow](assets/bovw_gcn_architecture.svg)
+
+---
+
+## 🧩 Neural Network Architecture Diagram
+Below is a detailed conceptual overview of the **CNN-GCN model** architecture:
+
+![GCN architecture](assets/gcn_architecture.svg)
 
    ## 🧰 Environment Setup
 
@@ -59,27 +61,49 @@ conda activate bovw-gcn
    2. Extract to `data/raw/NWPU-RESISC45`
    3. Update `config/config.yaml` with correct path
    
-   ### Training Pipeline
-```bash
-   # Step 1: Preprocess data (generate superpixels)
-   python scripts/01_preprocess_data.py --config config/config.yaml
-   
-   # Step 2: Train ResNet-GCN model
-   python scripts/02_train_gcn.py --config config/config.yaml
-   
-   # Step 3: Extract features for BoVW
-   python scripts/03_extract_features.py --config config/config.yaml
-   
-   # Step 4: Build visual vocabulary
-   python scripts/04_build_codebook.py --config config/config.yaml
-   
-   # Step 5: Train BoVW classifier
-   python scripts/05_train_bovw.py --config config/config.yaml
-   
-   # Step 6: Evaluate full pipeline
-   python scripts/06_evaluate_full_pipeline.py --config config/config.yaml
-```
-   
+
+## 🧩 Project Pipeline Overview
+
+| **Step** | **Approx. Duration** | **GPU Required** |
+|:----------------------|:----------------:|:----------------:|
+| 🧹 **Preprocessing** | ~3 hours | ❌ No |
+| 🧠 **GCN Training** | ~8 hours | ✅ Yes |
+| ⚙️ **Feature Extraction** | ~1 hour | ✅ Yes |
+| 📊 **Codebook Generation** | ~30 minutes | ❌ No |
+| 🏋️ **BoVW Training (SVM/RF)** | ~5 minutes | ❌ No |
+| 📈 **Evaluation** | ~30 minutes | ✅ Yes |
+| **🕒 Total Estimated Time** | **≈ 13 hours** | — |
+
+
+
+## ⚙️ Performance Expectations
+
+
+| Metric | Expected Value | Notes |
+|--------|----------------|-------|
+| Test Accuracy | 85–92% | On NWPU-RESISC45 dataset |
+| GCN Training Time | 6–12 hours | GPU: RTX 3090/V100 |
+| Preprocessing Time | ~3 hours | CPU-bound |
+| Inference Time | 50–100 ms | Per image (GPU) |
+| Throughput | 10–20 img/sec | Single GPU |
+| Model Size | ~100 MB | GCN model |
+| Memory (Training) | 12–16 GB | GPU VRAM |
+| Memory (Inference) | 4–6 GB | GPU VRAM |
+
+---
+
+## ✨ Key Features
+
+## 🔍 Architecture & Features
+
+| Category     | Details |
+|-------------|---------|
+| **Architecture** | ResNet50 backbone (pretrained), 2-layer GCN with attention, SLIC superpixel segmentation, K-NN graph construction, BoVW with Random Forest |
+| **Training**     | AdamW optimizer with weight decay, ReduceLROnPlateau scheduler, Gradient clipping, Checkpoint management, TensorBoard logging, Early stopping support |
+| **Features**     | Incremental K-Means for large datasets, Sparse tensor optimization, Batch processing, Multi-GPU ready (minor modifications), Configuration-driven design, Comprehensive logging |
+| **Evaluation**   | Confusion matrices, Classification reports, Per-class metrics, Timing analysis, Feature importance visualization, Integrated visualization tools |
+
+
    ## 📁 Project Structure
 ```
    bovw-gcn-remote-sensing/
@@ -104,19 +128,6 @@ conda activate bovw-gcn
    - Training hyperparameters
    - BoVW settings
    
-   ## 📈 Monitoring
-   
-   Training metrics are logged to:
-   - Console output
-   - TensorBoard: `tensorboard --logdir outputs/logs`
-   - Weights & Biases (if enabled)
-   
-   ## 🧪 Testing
-```bash
-   pytest tests/
-```
-   
-
 
    
    ## 🤝 Contributing

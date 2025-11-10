@@ -1,0 +1,332 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 473.59999999999997" style="max-height: 500px" width="1200" height="473.59999999999997">
+  
+  <defs>
+    <linearGradient y2="100%" x2="100%" y1="0%" x1="0%" id="bgGrad">
+      <stop style="stop-color:#0f172a;stop-opacity:1" offset="0%"/>
+      <stop style="stop-color:#1e293b;stop-opacity:1" offset="100%"/>
+    </linearGradient>
+    
+    <linearGradient y2="100%" x2="0%" y1="0%" x1="0%" id="boxGrad1">
+      <stop style="stop-color:#3b82f6;stop-opacity:0.2" offset="0%"/>
+      <stop style="stop-color:#3b82f6;stop-opacity:0.05" offset="100%"/>
+    </linearGradient>
+    
+    <linearGradient y2="100%" x2="0%" y1="0%" x1="0%" id="boxGrad2">
+      <stop style="stop-color:#8b5cf6;stop-opacity:0.2" offset="0%"/>
+      <stop style="stop-color:#8b5cf6;stop-opacity:0.05" offset="100%"/>
+    </linearGradient>
+    
+    <linearGradient y2="100%" x2="0%" y1="0%" x1="0%" id="boxGrad3">
+      <stop style="stop-color:#ec4899;stop-opacity:0.2" offset="0%"/>
+      <stop style="stop-color:#ec4899;stop-opacity:0.05" offset="100%"/>
+    </linearGradient>
+    
+    <linearGradient y2="100%" x2="0%" y1="0%" x1="0%" id="boxGrad4">
+      <stop style="stop-color:#10b981;stop-opacity:0.2" offset="0%"/>
+      <stop style="stop-color:#10b981;stop-opacity:0.05" offset="100%"/>
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur result="coloredBlur" stdDeviation="3"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <rect fill="url(#bgGrad)" height="800" width="1200"/>
+  
+  
+  <text text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="28" font-family="Arial, sans-serif" y="40" x="600">
+    BoVW-GCN Remote Sensing Pipeline
+  </text>
+  
+  
+  <g id="stage1">
+    <rect stroke-width="2" stroke="#3b82f6" fill="url(#boxGrad1)" rx="10" height="150" width="220" y="80" x="50"/>
+    <text text-anchor="middle" fill="#60a5fa" font-weight="bold" font-size="16" font-family="Arial, sans-serif" y="105" x="160">
+      📊 Data Input
+    </text>
+    
+    <text text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Arial, sans-serif" y="130" x="160">
+      Raw Remote Sensing
+    </text>
+    <text text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Arial, sans-serif" y="148" x="160">
+      Images
+    </text>
+    
+    <rect stroke-width="1" stroke="#3b82f6" fill="#1e293b" rx="5" height="50" width="200" y="165" x="60"/>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="185" x="160">
+      SLIC Superpixels
+    </text>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="203" x="160">
+      Graph Construction
+    </text>
+  </g>
+  
+  
+  <defs>
+    <marker orient="auto" refY="3" refX="9" markerHeight="10" markerWidth="10" id="arrowhead">
+      <polygon fill="#64748b" points="0 0, 10 3, 0 6"/>
+    </marker>
+  </defs>
+  <path fill="none" marker-end="url(#arrowhead)" stroke-width="2" stroke="#64748b" d="M 270 155 L 310 155"/>
+  
+  
+  <g id="stage2">
+    <rect stroke-width="2" stroke="#8b5cf6" fill="url(#boxGrad2)" rx="10" height="220" width="220" y="80" x="310"/>
+    <text text-anchor="middle" fill="#a78bfa" font-weight="bold" font-size="16" font-family="Arial, sans-serif" y="105" x="420">
+      🧠 GCN Model
+    </text>
+    
+    <rect stroke-width="1" stroke="#8b5cf6" fill="#1e293b" rx="5" height="40" width="200" y="120" x="320"/>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="145" x="420">
+      ResNet + GCN Layers
+    </text>
+    
+    <rect stroke-width="1" stroke="#8b5cf6" fill="#1e293b" rx="5" height="40" width="200" y="170" x="320"/>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="195" x="420">
+      Channel-Enhanced GCN
+    </text>
+    
+    <rect stroke-width="1" stroke="#8b5cf6" fill="#1e293b" rx="5" height="40" width="200" y="220" x="320"/>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="245" x="420">
+      Attention Mechanism
+    </text>
+    
+    <text text-anchor="middle" fill="#64748b" font-size="10" font-family="Arial, sans-serif" y="280" x="420">
+      Output: Feature Vectors
+    </text>
+  </g>
+  
+  
+  <path fill="none" marker-end="url(#arrowhead)" stroke-width="2" stroke="#64748b" d="M 530 190 L 570 190"/>
+  
+  
+  <g id="stage3">
+    <rect stroke-width="2" stroke="#ec4899" fill="url(#boxGrad3)" rx="10" height="150" width="220" y="80" x="570"/>
+    <text text-anchor="middle" fill="#f472b6" font-weight="bold" font-size="16" font-family="Arial, sans-serif" y="105" x="680">
+      📚 Codebook
+    </text>
+    
+    <text text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Arial, sans-serif" y="130" x="680">
+      K-Means Clustering
+    </text>
+    
+    <rect stroke-width="1" stroke="#ec4899" fill="#1e293b" rx="5" height="70" width="200" y="145" x="580"/>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="165" x="680">
+      Build Visual Vocabulary
+    </text>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="183" x="680">
+      Cluster Centers</text>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="201" x="680">
+      (cluster_centers.npy)
+    </text>
+  </g>
+  
+  
+  <path fill="none" marker-end="url(#arrowhead)" stroke-width="2" stroke="#64748b" d="M 790 155 L 830 155"/>
+  
+  
+  <g id="stage4">
+    <rect stroke-width="2" stroke="#3b82f6" fill="url(#boxGrad1)" rx="10" height="150" width="220" y="80" x="830"/>
+    <text text-anchor="middle" fill="#60a5fa" font-weight="bold" font-size="16" font-family="Arial, sans-serif" y="105" x="940">
+      📊 BoVW Encoding
+    </text>
+    
+    <text text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Arial, sans-serif" y="130" x="940">
+      Feature Quantization
+    </text>
+    
+    <rect stroke-width="1" stroke="#3b82f6" fill="#1e293b" rx="5" height="70" width="200" y="145" x="840"/>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="165" x="940">
+      Assign to Clusters
+    </text>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="183" x="940">
+      Build Histograms
+    </text>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="201" x="940">
+      (histograms_*.npz)
+    </text>
+  </g>
+  
+  
+  <path fill="none" marker-end="url(#arrowhead)" stroke-width="2" stroke="#64748b" d="M 940 230 L 940 280"/>
+  
+  
+  <g id="stage5">
+    <rect stroke-width="2" stroke="#10b981" fill="url(#boxGrad4)" rx="10" height="150" width="220" y="280" x="830"/>
+    <text text-anchor="middle" fill="#34d399" font-weight="bold" font-size="16" font-family="Arial, sans-serif" y="305" x="940">
+      🎯 Classification
+    </text>
+    
+    <rect stroke-width="1" stroke="#10b981" fill="#1e293b" rx="5" height="45" width="200" y="320" x="840"/>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="340" x="940">
+      BoVW Classifier
+    </text>
+    <text text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" y="355" x="940">
+      (bovw_classifier.pkl)
+    </text>
+    
+    <rect stroke-width="1" stroke="#10b981" fill="#065f46" rx="5" height="40" width="200" y="375" x="840"/>
+    <text text-anchor="middle" fill="#6ee7b7" font-weight="bold" font-size="12" font-family="Arial, sans-serif" y="395" x="940">
+      Final Predictions
+    </text>
+  </g>
+  
+  
+  <g id="pipeline-flow">
+    <rect opacity="0.7" stroke-width="2" stroke="#475569" fill="#0f172a" rx="10" height="280" width="1100" y="480" x="50"/>
+    <text text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="18" font-family="Arial, sans-serif" y="510" x="600">
+      🔄 Complete Pipeline Execution
+    </text>
+    
+    
+    <g id="step1">
+      <rect stroke-width="1.5" stroke="#3b82f6" fill="#1e3a8a" rx="5" height="80" width="160" y="530" x="70"/>
+      <text text-anchor="middle" fill="#60a5fa" font-weight="bold" font-size="11" font-family="Arial, sans-serif" y="555" x="150">
+        Step 1
+      </text>
+      <text text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="573" x="150">
+        Preprocess Data
+      </text>
+      <text text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Arial, sans-serif" y="590" x="150">
+        01_preprocess_data.py
+      </text>
+    </g>
+    
+    <g id="step2">
+      <rect stroke-width="1.5" stroke="#8b5cf6" fill="#581c87" rx="5" height="80" width="160" y="530" x="250"/>
+      <text text-anchor="middle" fill="#a78bfa" font-weight="bold" font-size="11" font-family="Arial, sans-serif" y="555" x="330">
+        Step 2
+      </text>
+      <text text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="573" x="330">
+        Train GCN
+      </text>
+      <text text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Arial, sans-serif" y="590" x="330">
+        02_train_gcn.py
+      </text>
+    </g>
+    
+    <g id="step3">
+      <rect stroke-width="1.5" stroke="#ec4899" fill="#831843" rx="5" height="80" width="160" y="530" x="430"/>
+      <text text-anchor="middle" fill="#f472b6" font-weight="bold" font-size="11" font-family="Arial, sans-serif" y="555" x="510">
+        Step 3
+      </text>
+      <text text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="573" x="510">
+        Extract Features
+      </text>
+      <text text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Arial, sans-serif" y="590" x="510">
+        03_extract_features.py
+      </text>
+    </g>
+    
+    <g id="step4">
+      <rect stroke-width="1.5" stroke="#f59e0b" fill="#713f12" rx="5" height="80" width="160" y="530" x="610"/>
+      <text text-anchor="middle" fill="#fbbf24" font-weight="bold" font-size="11" font-family="Arial, sans-serif" y="555" x="690">
+        Step 4
+      </text>
+      <text text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="573" x="690">
+        Build Codebook
+      </text>
+      <text text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Arial, sans-serif" y="590" x="690">
+        04_build_codebook.py
+      </text>
+    </g>
+    
+    <g id="step5">
+      <rect stroke-width="1.5" stroke="#10b981" fill="#065f46" rx="5" height="80" width="160" y="530" x="790"/>
+      <text text-anchor="middle" fill="#34d399" font-weight="bold" font-size="11" font-family="Arial, sans-serif" y="555" x="870">
+        Step 5
+      </text>
+      <text text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="573" x="870">
+        Train BoVW
+      </text>
+      <text text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Arial, sans-serif" y="590" x="870">
+        05_train_bovw.py
+      </text>
+    </g>
+    
+    <g id="step6">
+      <rect stroke-width="1.5" stroke="#f97316" fill="#7c2d12" rx="5" height="80" width="160" y="530" x="970"/>
+      <text text-anchor="middle" fill="#fb923c" font-weight="bold" font-size="11" font-family="Arial, sans-serif" y="555" x="1050">
+        Step 6
+      </text>
+      <text text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="573" x="1050">
+        Evaluate
+      </text>
+      <text text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Arial, sans-serif" y="590" x="1050">
+        06_evaluate_full_pipeline.py
+      </text>
+    </g>
+    
+    
+    <path fill="none" marker-end="url(#arrowhead)" stroke-width="1.5" stroke="#64748b" d="M 230 570 L 250 570"/>
+    <path fill="none" marker-end="url(#arrowhead)" stroke-width="1.5" stroke="#64748b" d="M 410 570 L 430 570"/>
+    <path fill="none" marker-end="url(#arrowhead)" stroke-width="1.5" stroke="#64748b" d="M 590 570 L 610 570"/>
+    <path fill="none" marker-end="url(#arrowhead)" stroke-width="1.5" stroke="#64748b" d="M 770 570 L 790 570"/>
+    <path fill="none" marker-end="url(#arrowhead)" stroke-width="1.5" stroke="#64748b" d="M 950 570 L 970 570"/>
+    
+    
+    <text fill="#cbd5e1" font-weight="bold" font-size="12" font-family="Arial, sans-serif" y="640" x="70">
+      📦 Key Components:
+    </text>
+    <text fill="#94a3b8" font-size="10" font-family="Arial, sans-serif" y="665" x="70">
+      • Models: ResNet-GCN, Channel-Enhanced GCN, Attention
+    </text>
+    <text fill="#94a3b8" font-size="10" font-family="Arial, sans-serif" y="685" x="70">
+      • Features: SLIC Superpixels, Graph Construction
+    </text>
+    <text fill="#94a3b8" font-size="10" font-family="Arial, sans-serif" y="705" x="70">
+      • Training: Metrics, Checkpoints, Evaluation
+    </text>
+    <text fill="#94a3b8" font-size="10" font-family="Arial, sans-serif" y="725" x="70">
+      • Outputs: Logs, Visualizations, Confusion Matrices
+    </text>
+    
+    <text fill="#cbd5e1" font-weight="bold" font-size="12" font-family="Arial, sans-serif" y="640" x="650">
+      💾 Stored Artifacts:
+    </text>
+    <text fill="#94a3b8" font-size="10" font-family="Arial, sans-serif" y="665" x="650">
+      • best_model.pth (Trained GCN)
+    </text>
+    <text fill="#94a3b8" font-size="10" font-family="Arial, sans-serif" y="685" x="650">
+      • cluster_centers.npy (Visual Vocabulary)
+    </text>
+    <text fill="#94a3b8" font-size="10" font-family="Arial, sans-serif" y="705" x="650">
+      • bovw_classifier.pkl (Final Classifier)
+    </text>
+    <text fill="#94a3b8" font-size="10" font-family="Arial, sans-serif" y="725" x="650">
+      • histograms_*.npz (Feature Histograms)
+    </text>
+  </g>
+  
+  
+  <g id="legend">
+    <rect opacity="0.9" stroke-width="1.5" stroke="#475569" fill="#0f172a" rx="8" height="130" width="220" y="300" x="50"/>
+    <text text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="13" font-family="Arial, sans-serif" y="325" x="160">
+      🔑 Architecture Layers
+    </text>
+    
+    <circle fill="#3b82f6" r="5" cy="345" cx="70"/>
+    <text fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="350" x="85">
+      Input/Output Processing
+    </text>
+    
+    <circle fill="#8b5cf6" r="5" cy="365" cx="70"/>
+    <text fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="370" x="85">
+      Deep Learning (GCN)
+    </text>
+    
+    <circle fill="#ec4899" r="5" cy="385" cx="70"/>
+    <text fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="390" x="85">
+      Feature Engineering
+    </text>
+    
+    <circle fill="#10b981" r="5" cy="405" cx="70"/>
+    <text fill="#cbd5e1" font-size="10" font-family="Arial, sans-serif" y="410" x="85">
+      Classification Output
+    </text>
+  </g>
+</svg>
