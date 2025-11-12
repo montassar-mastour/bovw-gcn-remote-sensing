@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models
-from typing import Tuple
+from torchvision.models import resnet50, ResNet50_Weights
 
 from .gcn import GCNLayer
 from .attention import AttentionLayer
@@ -56,7 +56,7 @@ class CEGCN(nn.Module):
             hidden_dims = [512, 256, 128]
         
         # ResNet50 backbone
-        self.resnet = models.resnet50(pretrained=True)
+        self.resnet = resnet50(weights=ResNet50_Weights.DEFAULT)
         self.resnet = nn.Sequential(*list(self.resnet.children())[:8])
         
         # 1x1 convolution to reduce channels
