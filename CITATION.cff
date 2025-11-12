@@ -1,0 +1,6 @@
+@inproceedings{mastour2024bovw,
+  title={Bag-of-Visual-Words Feature Extraction using Graph Convolutional Networks},
+  author={Montassar Mastour and Mohamed Farah},
+  booktitle={IEEE International Conference on Advanced Technologies, Signal and Image Processing (ATSIP)},
+  year={2024}
+}
