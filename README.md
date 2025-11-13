@@ -55,12 +55,41 @@ conda activate bovw-gcn
 ```
 
    
-   ### Dataset Preparation
-   
-   1. Download NWPU-RESISC45 dataset ()
-   2. Extract to `data/raw/NWPU-RESISC45`
-   3. Update `config/config.yaml` with correct path
-   
+### 🧪 Testing
+
+To verify that the full pipeline runs correctly end-to-end, use:
+```bash
+pytest tests/test_complete_pipeline.py -v
+```
+## 📦 Dataset Preparation
+🧰 1️⃣ Get Your Kaggle API Token
+
+To enable automatic dataset download:
+
+Go to your Kaggle account → Settings → API → Click “Create New API Token”
+
+This will download a file named kaggle.json 
+Then configure it:
+```bash
+mkdir -p ~/.kaggle
+mv ~/Downloads/kaggle.json ~/.kaggle/
+chmod 600 ~/.kaggle/kaggle.json
+```
+   ## 🚀 Running the Pipeline
+
+You can run the **entire pipeline** automatically or execute any step individually:
+
+```bash
+# Run everything
+python -m scripts
+
+# Run a specific step (Prepare dataset(download + extract))
+python -m scripts --step 00_prepare_dataset
+```
+For detailed explanations of each step, see
+📄 [scripts README](scripts/README.md)
+
+
 
 ## 🧩 Project Pipeline Overview
 

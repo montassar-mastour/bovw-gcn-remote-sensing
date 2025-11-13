@@ -1,20 +1,68 @@
 # Scripts
 
    ## Pipeline Overview
-   
-   1. **01_preprocess_data.py** - Generate superpixels and graphs
-   2. **02_train_gcn.py** - Train ResNet-GCN model
-   3. **03_extract_features.py** - Extract features for BoVW
-   4. **04_build_codebook.py** - Build visual vocabulary
-   5. **05_train_bovw.py** - Train BoVW classifier
-   6. **06_evaluate_full_pipeline.py** - End-to-end evaluation
+   1. **00_prepare_dataset.py** - download + extract
+   2. **01_preprocess_data.py** - Generate superpixels and graphs
+   3. **02_train_gcn.py** - Train ResNet-GCN model
+   4. **03_extract_features.py** - Extract features for BoVW
+   5. **04_build_codebook.py** - Build visual vocabulary
+   6. **05_train_bovw.py** - Train BoVW classifier
+   7. **06_evaluate_full_pipeline.py** - End-to-end evaluation
    
    ## Usage
+
+  ## 🚀 Quick Usage
+
+You can now run the entire BoVW-GCN pipeline or a specific step using Python’s module syntax.
+
+### Run the full pipeline
+```bash
+python -m scripts
+```
+This executes the corresponding script defined in scripts/__main__.py.
+All arguments (paths, configs, etc.) are automatically handled for you.
+
+
+### Run step by step  :
+```bash
+# Step 0: Prepare dataset (download + extract)
+python -m scripts --step 00_prepare_dataset
+
+# Step 1: Preprocess 100 samples
+python -m scripts --step 01_preprocess_data 
+
+# Step 2: Train for 5 epochs
+python -m scripts --step 02_train_gcn 
+
+# Step 3: Extract features
+python -m scripts --step 03_extract_features
+
+# Step 4: Build codebook (use fewer samples)
+python -m scripts --step 04_build_codebook
+
+# Step 5: Train classifier
+python -m scripts --step 05_train_bovw
+
+# Step 6: Evaluate
+python -m scripts --step 06_evaluate_full_pipeline --splits test
+```
    
 
 ## Complete Pipeline Workflow
 
-### Step 1: Preprocess Data
+### Step 1: Prepare dataset (download + extract)
+```bash
+python scripts/00_prepare_dataset.py
+```
+**Output:**
+
+Dataset ZIP: data/raw/nwpuresisc45.zip
+
+Extracted dataset: data/raw/NWPU-RESISC45/
+
+**Time:** ~5-10 minutes (depends on internet speed)
+
+### Step 2: Preprocess Data
 Generate superpixels and adjacency matrices for all images.
 ```bash
 python scripts/01_preprocess_data.py \
@@ -28,7 +76,7 @@ python scripts/01_preprocess_data.py \
 
 ---
 
-### Step 2: Train GCN Model
+### Step 3: Train GCN Model
 Train the ResNet-GCN model for feature extraction.
 ```bash
 python scripts/02_train_gcn.py \
@@ -47,7 +95,7 @@ python scripts/02_train_gcn.py \
 
 ---
 
-### Step 3: Extract Features
+### Step 4: Extract Features
 Extract GCN features for BoVW.
 ```bash
 python scripts/03_extract_features.py \
@@ -63,7 +111,7 @@ python scripts/03_extract_features.py \
 
 ---
 
-### Step 4: Build Codebook
+### Step 5: Build Codebook
 Generate visual vocabulary using K-Means.
 ```bash
 python scripts/04_build_codebook.py \
@@ -80,7 +128,7 @@ python scripts/04_build_codebook.py \
 
 ---
 
-### Step 5: Train BoVW Classifier
+### Step 6: Train BoVW Classifier
 Train the final BoVW classifier.
 ```bash
 python scripts/05_train_bovw.py \
@@ -96,7 +144,7 @@ python scripts/05_train_bovw.py \
 
 ---
 
-### Step 6: Evaluate Full Pipeline
+### Step 7: Evaluate Full Pipeline
 End-to-end evaluation with timing analysis.
 ```bash
 python scripts/06_evaluate_full_pipeline.py \
@@ -133,33 +181,7 @@ python scripts/utils/export_model.py \
     --config config/config.yaml
 ```
 
----
 
-## Quick Start (Testing)
-
-Test the pipeline on a small subset:
-```bash
-# Preprocess 100 samples
-python scripts/01_preprocess_data.py --config config/config.yaml
-
-# Train for 5 epochs
-python scripts/02_train_gcn.py --config config/config.yaml --epochs 5
-
-# Extract features
-python scripts/03_extract_features.py \
-    --checkpoint checkpoints/checkpoint_epoch_5.pth
-
-# Build codebook (use fewer samples)
-python scripts/04_build_codebook.py --max_samples 1000
-
-# Train classifier
-python scripts/05_train_bovw.py
-
-# Evaluate
-python scripts/06_evaluate_full_pipeline.py --splits test
-```
-
----
 
 ## Troubleshooting
 
