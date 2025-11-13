@@ -107,6 +107,8 @@ def main():
                         help='Path to config file')
     parser.add_argument('--output_dir', type=str, default='data/processed',
                         help='Output directory for processed data')
+    parser.add_argument('--max_samples', type=int, default=None,
+                    help='Optional: limit number of images for quick testing')
     args = parser.parse_args()
     
     # Load config
@@ -131,8 +133,11 @@ def main():
         train_split=config.dataset.train_split,
         val_split=config.dataset.val_split,
         test_split=config.dataset.test_split,
-        num_workers=config.dataloader.num_workers
+        num_workers=config.dataloader.num_workers,
+        max_samples=args.max_samples,
     )
+    if args.max_samples:
+        logger.info(f"⚙️ Limiting preprocessing to first {args.max_samples} samples")
     
     # Process each split
     for split_name, loader in [
