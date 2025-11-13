@@ -4,17 +4,18 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
+from omegaconf import OmegaConf
 import pickle
 from typing import Dict, Any, Optional
 
 
 class BoVWClassifier:
     """Bag of Visual Words classifier wrapper."""
-    
+        
     def __init__(
         self,
         classifier_type: str = 'random_forest',
-        classifier_params: Optional[Dict[str, Any]] = None,
+        classifier_params: Optional[dict] = None,
         random_state: int = 42
     ):
         """
@@ -27,30 +28,42 @@ class BoVWClassifier:
         """
         self.classifier_type = classifier_type
         self.random_state = random_state
-        
+
+        # ✅ Handle None safely
         if classifier_params is None:
             classifier_params = {}
-        
-        # Initialize classifier
+
+        # ✅ If OmegaConf object, convert it
+        try:
+            from omegaconf import OmegaConf
+            if not isinstance(classifier_params, dict) and OmegaConf.is_config(classifier_params):
+                classifier_params = OmegaConf.to_container(classifier_params, resolve=True)
+        except ImportError:
+            pass  # just in case OmegaConf isn't used
+
+        # ✅ Initialize classifier
+        params = classifier_params.to_dict() if hasattr(classifier_params, "to_dict") else dict(classifier_params)
         if classifier_type == 'random_forest':
             self.classifier = RandomForestClassifier(
-                random_state=random_state,
-                **classifier_params
+                **params
             )
         elif classifier_type == 'svm':
             self.classifier = SVC(
                 random_state=random_state,
-                **classifier_params
+                **params
             )
         elif classifier_type == 'logistic':
             self.classifier = LogisticRegression(
                 random_state=random_state,
-                **classifier_params
+                **params
             )
         else:
             raise ValueError(f"Unknown classifier type: {classifier_type}")
         
         self.is_fitted = False
+
+
+
     
     def fit(self, X: np.ndarray, y: np.ndarray):
         """
