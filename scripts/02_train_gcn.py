@@ -36,11 +36,14 @@ def main():
     parser.add_argument('--processed_data', type=str, default='data/processed')
     parser.add_argument('--resume', type=str, default=None,
                         help='Path to checkpoint to resume from')
+    parser.add_argument('--epochs', type=int, default=None, help='Number of training epochs')
     args = parser.parse_args()
     
     # Load config
     config = load_config(args.config)
-    
+    if args.epochs is not None:
+        config.training.epochs = args.epochs
+
     # Setup logger
     logger = setup_logger(
         'training',
@@ -62,7 +65,8 @@ def main():
         train_split=config.dataset.train_split,
         val_split=config.dataset.val_split,
         test_split=config.dataset.test_split,
-        num_workers=config.dataloader.num_workers
+        num_workers=config.dataloader.num_workers,
+        include_filenames=True
     )
     
     # Create model
@@ -87,10 +91,17 @@ def main():
         weight_decay=config.training.weight_decay
     )
     
+    scheduler_params = {
+        'mode': config.training.scheduler_params.mode,
+        'patience': config.training.scheduler_params.patience,
+        'factor': config.training.scheduler_params.factor
+    }
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
         optimizer,
-        **config.training.scheduler_params
+        **scheduler_params
     )
+
+
     
     # Create trainer
     trainer = Trainer(
@@ -120,6 +131,7 @@ def main():
         train_loader=train_loader,
         val_loader=val_loader,
         tensor_loader_fn=train_tensor_fn,  # You'll need to alternate these
+        val_tensor_loader_fn=val_tensor_fn,
         num_epochs=config.training.epochs,
         start_epoch=start_epoch
     )

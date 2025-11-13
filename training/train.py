@@ -230,6 +230,7 @@ class Trainer:
         train_loader: DataLoader,
         val_loader: DataLoader,
         tensor_loader_fn: Callable,
+        val_tensor_loader_fn: Callable,
         num_epochs: int,
         start_epoch: int = 1
     ):
@@ -253,7 +254,7 @@ class Trainer:
             train_metrics = self.train_epoch(train_loader, tensor_loader_fn)
             
             # Validate
-            val_metrics = self.validate(val_loader, tensor_loader_fn)
+            val_metrics = self.validate(val_loader, val_tensor_loader_fn)
             
             # Update history
             self.history['train_loss'].append(train_metrics['loss'])
