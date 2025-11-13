@@ -11,11 +11,12 @@ venv/
 # Data
 data/raw/
 data/processed/
+outputs/
 *.npz
 *.npy
 
 # Models
-checkpoints/*.pth
+checkpoints/*
 experiments/*/checkpoints/
 
 # IDE
