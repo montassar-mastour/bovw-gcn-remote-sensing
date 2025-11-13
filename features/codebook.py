@@ -150,25 +150,44 @@ class CodebookGenerator:
         
         if self.verbose:
             print(f"✓ Codebook saved to {filepath}")
-    
     def load(self, filepath: str):
         """Load codebook from file."""
-        if filepath.endswith('.pkl'):
-            with open(filepath, 'rb') as f:
-                save_data = pickle.load(f)
-            
-            self.kmeans.cluster_centers_ = save_data['cluster_centers']
-            self.n_clusters = save_data['n_clusters']
-        else:
-            # Load from numpy file
-            cluster_centers = np.load(filepath)
-            self.kmeans.cluster_centers_ = cluster_centers
-            self.n_clusters = cluster_centers.shape[0]
+        if not filepath.endswith('.pkl'):
+            raise ValueError("Please provide a .pkl file for full MiniBatchKMeans object")
+
+        with open(filepath, 'rb') as f:
+            save_data = pickle.load(f)
+
+        # Recreate MiniBatchKMeans with the same parameters used during training
+        self.kmeans = MiniBatchKMeans(
+            n_clusters=save_data['n_clusters'],
+            batch_size=save_data['params']['batch_size'],
+            n_init=save_data['params']['n_init'],
+            random_state=save_data['params']['random_state'],
+            max_no_improvement=10,
+            verbose=1 if self.verbose else 0
+        )
+
+        # Set all necessary internal attributes for a fitted model
+        n_clusters = save_data['n_clusters']
+        cluster_centers = save_data['cluster_centers']
+        n_features = cluster_centers.shape[1]
         
+        self.kmeans.cluster_centers_ = cluster_centers
+        self.kmeans._n_features_in = n_features
+        self.kmeans._n_threads = 1  # Default value
+        self.kmeans.n_iter_ = 0
+        self.kmeans._counts = np.ones(n_clusters, dtype=np.int32)
+        self.kmeans.n_steps_ = 0
+        
+        # Mark as fitted
         self.is_fitted = True
-        
+
         if self.verbose:
             print(f"✓ Codebook loaded from {filepath}")
+
+
+
     
     def get_cluster_centers(self) -> np.ndarray:
         """Get cluster centers."""
