@@ -98,7 +98,8 @@ python scripts/04_build_codebook.py \
 ```bash
 python scripts/05_train_bovw.py \
     --config config/config.yaml \
-    --codebook checkpoints/cluster_centers.npy
+    --codebook checkpoints/cluster_centers.pkl
+
 ```
 
 ## Troubleshooting
