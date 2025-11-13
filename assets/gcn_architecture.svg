@@ -1,0 +1,485 @@
+<svg viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e27;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1f3a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="inputGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.1" />
+    </linearGradient>
+    
+    <linearGradient id="resnetGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.1" />
+    </linearGradient>
+    
+    <linearGradient id="gcnGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:0.1" />
+    </linearGradient>
+    
+    <linearGradient id="attentionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0.1" />
+    </linearGradient>
+    
+    <linearGradient id="outputGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.1" />
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+  
+  <rect width="1400" height="900" fill="url(#bgGrad)"/>
+  
+  <!-- Title -->
+  <text x="700" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#f1f5f9" text-anchor="middle">
+    Channel-Enhanced GCN Architecture
+  </text>
+  <text x="700" y="70" font-family="Arial, sans-serif" font-size="16" fill="#94a3b8" text-anchor="middle">
+    ResNet-GCN with Attention Mechanism for Remote Sensing Classification
+  </text>
+  
+  <!-- Input Layer -->
+  <g id="input-layer">
+    <rect x="50" y="120" width="200" height="650" rx="15" fill="url(#inputGrad)" stroke="#3b82f6" stroke-width="3"/>
+    <text x="150" y="155" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#60a5fa" text-anchor="middle">
+      Input Layer
+    </text>
+    
+    <!-- Image Input -->
+    <rect x="75" y="180" width="150" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="150" y="205" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Remote Sensing
+    </text>
+    <text x="150" y="225" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Image
+    </text>
+    <text x="150" y="245" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      H × W × C
+    </text>
+    
+    <!-- Superpixel Segmentation -->
+    <path d="M 150 260 L 150 290" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <rect x="75" y="290" width="150" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="150" y="315" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      SLIC Superpixels
+    </text>
+    <text x="150" y="335" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Segment image into
+    </text>
+    <text x="150" y="352" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      N superpixels
+    </text>
+    
+    <!-- Graph Construction -->
+    <path d="M 150 370 L 150 400" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <rect x="75" y="400" width="150" height="100" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="150" y="425" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Graph Structure
+    </text>
+    <text x="150" y="445" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Nodes: N superpixels
+    </text>
+    <text x="150" y="462" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Edges: Adjacency A
+    </text>
+    <text x="150" y="479" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Features: X ∈ ℝ^(N×D)
+    </text>
+    
+    <!-- Node Features -->
+    <path d="M 150 500 L 150 530" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <rect x="75" y="530" width="150" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="150" y="555" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Node Features
+    </text>
+    <text x="150" y="575" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Color, Texture,
+    </text>
+    <text x="150" y="592" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Spatial Info
+    </text>
+  </g>
+  
+  <path d="M 250 400 L 300 400" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- ResNet Feature Extractor -->
+  <g id="resnet-layer">
+    <rect x="300" y="120" width="230" height="650" rx="15" fill="url(#resnetGrad)" stroke="#8b5cf6" stroke-width="3"/>
+    <text x="415" y="155" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#a78bfa" text-anchor="middle">
+      ResNet Backbone
+    </text>
+    
+    <!-- Conv Block 1 -->
+    <rect x="325" y="180" width="180" height="70" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="415" y="205" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Conv Block 1
+    </text>
+    <text x="415" y="225" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Conv3x3 + BN + ReLU
+    </text>
+    <text x="415" y="240" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      64 filters
+    </text>
+    
+    <path d="M 415 250 L 415 275" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Conv Block 2 -->
+    <rect x="325" y="275" width="180" height="70" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="415" y="300" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Conv Block 2
+    </text>
+    <text x="415" y="320" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Conv3x3 + BN + ReLU
+    </text>
+    <text x="415" y="335" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      128 filters
+    </text>
+    
+    <path d="M 415 345 L 415 370" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Residual Block -->
+    <rect x="325" y="370" width="180" height="90" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="415" y="395" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Residual Block
+    </text>
+    <text x="415" y="415" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Conv3x3 + BN + ReLU
+    </text>
+    <text x="415" y="430" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Conv3x3 + BN
+    </text>
+    <text x="415" y="445" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      + Skip Connection
+    </text>
+    
+    <path d="M 415 460 L 415 485" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Global Average Pooling -->
+    <rect x="325" y="485" width="180" height="70" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="415" y="510" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Global Avg Pool
+    </text>
+    <text x="415" y="530" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Spatial aggregation
+    </text>
+    <text x="415" y="545" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Output: Feature vector
+    </text>
+    
+    <path d="M 415 555 L 415 580" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Feature Vector -->
+    <rect x="325" y="580" width="180" height="70" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="415" y="605" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Dense Features
+    </text>
+    <text x="415" y="625" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      H' ∈ ℝ^(N×F)
+    </text>
+    <text x="415" y="640" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      F = feature dim
+    </text>
+  </g>
+  
+  <path d="M 530 400 L 580 400" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- GCN Layers -->
+  <g id="gcn-layers">
+    <rect x="580" y="120" width="250" height="650" rx="15" fill="url(#gcnGrad)" stroke="#ec4899" stroke-width="3"/>
+    <text x="705" y="155" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#f472b6" text-anchor="middle">
+      GCN Layers
+    </text>
+    
+    <!-- GCN Layer 1 -->
+    <rect x="605" y="180" width="200" height="110" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <text x="705" y="205" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      GCN Layer 1
+    </text>
+    <text x="705" y="228" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      H^(1) = σ(ÂH^(0)W^(1))
+    </text>
+    <text x="705" y="248" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Â: Normalized adjacency
+    </text>
+    <text x="705" y="263" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      W^(1): Learnable weights
+    </text>
+    <text x="705" y="278" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Output: 256 channels
+    </text>
+    
+    <path d="M 705 290 L 705 315" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Channel Enhancement -->
+    <rect x="605" y="315" width="200" height="110" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <text x="705" y="340" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Channel Enhancement
+    </text>
+    <text x="705" y="363" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Multi-channel processing
+    </text>
+    <text x="705" y="380" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      C parallel GCN branches
+    </text>
+    <text x="705" y="395" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Channel-wise aggregation
+    </text>
+    <text x="705" y="410" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Feature fusion
+    </text>
+    
+    <path d="M 705 425 L 705 450" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- GCN Layer 2 -->
+    <rect x="605" y="450" width="200" height="100" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <text x="705" y="475" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      GCN Layer 2
+    </text>
+    <text x="705" y="498" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      H^(2) = σ(ÂH^(1)W^(2))
+    </text>
+    <text x="705" y="518" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Deeper graph features
+    </text>
+    <text x="705" y="533" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Output: 128 channels
+    </text>
+    
+    <path d="M 705 550 L 705 575" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Dropout & Normalization -->
+    <rect x="605" y="575" width="200" height="80" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <text x="705" y="600" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Regularization
+    </text>
+    <text x="705" y="620" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Dropout (p=0.5)
+    </text>
+    <text x="705" y="635" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Batch Normalization
+    </text>
+  </g>
+  
+  <path d="M 830 400 L 880 400" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Attention Mechanism -->
+  <g id="attention-layer">
+    <rect x="880" y="120" width="240" height="650" rx="15" fill="url(#attentionGrad)" stroke="#f59e0b" stroke-width="3"/>
+    <text x="1000" y="155" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#fbbf24" text-anchor="middle">
+      Attention Module
+    </text>
+    
+    <!-- Self Attention -->
+    <rect x="905" y="180" width="190" height="110" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="1000" y="205" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Self-Attention
+    </text>
+    <text x="1000" y="228" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Q = H^(2)W_Q
+    </text>
+    <text x="1000" y="245" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      K = H^(2)W_K
+    </text>
+    <text x="1000" y="262" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      V = H^(2)W_V
+    </text>
+    <text x="1000" y="279" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Multi-head mechanism
+    </text>
+    
+    <path d="M 1000 290 L 1000 315" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Attention Scores -->
+    <rect x="905" y="315" width="190" height="90" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="1000" y="340" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Attention Weights
+    </text>
+    <text x="1000" y="363" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      α = softmax(QK^T/√d_k)
+    </text>
+    <text x="1000" y="383" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Scaled dot-product
+    </text>
+    <text x="1000" y="395" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      attention
+    </text>
+    
+    <path d="M 1000 405 L 1000 430" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Weighted Features -->
+    <rect x="905" y="430" width="190" height="90" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="1000" y="455" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Weighted Features
+    </text>
+    <text x="1000" y="478" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Z = αV
+    </text>
+    <text x="1000" y="498" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Context-aware
+    </text>
+    <text x="1000" y="510" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      representations
+    </text>
+    
+    <path d="M 1000 520 L 1000 545" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Concatenation -->
+    <rect x="905" y="545" width="190" height="100" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="1000" y="570" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Feature Fusion
+    </text>
+    <text x="1000" y="593" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      Concat[H^(2), Z]
+    </text>
+    <text x="1000" y="613" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Residual connection
+    </text>
+    <text x="1000" y="628" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      + Layer normalization
+    </text>
+  </g>
+  
+  <path d="M 1120 400 L 1170 400" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Output Layer -->
+  <g id="output-layer">
+    <rect x="1170" y="120" width="180" height="650" rx="15" fill="url(#outputGrad)" stroke="#10b981" stroke-width="3"/>
+    <text x="1260" y="155" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#34d399" text-anchor="middle">
+      Output
+    </text>
+    
+    <!-- Graph Pooling -->
+    <rect x="1190" y="180" width="140" height="90" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="1260" y="205" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Graph Pooling
+    </text>
+    <text x="1260" y="228" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Global mean/max
+    </text>
+    <text x="1260" y="243" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      pooling across
+    </text>
+    <text x="1260" y="258" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      all nodes
+    </text>
+    
+    <path d="M 1260 270 L 1260 295" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- FC Layer 1 -->
+    <rect x="1190" y="295" width="140" height="80" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="1260" y="320" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      FC Layer 1
+    </text>
+    <text x="1260" y="343" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Dense(512)
+    </text>
+    <text x="1260" y="358" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      + ReLU
+    </text>
+    
+    <path d="M 1260 375 L 1260 400" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Dropout -->
+    <rect x="1190" y="400" width="140" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="1260" y="425" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      Dropout
+    </text>
+    <text x="1260" y="445" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      p = 0.3
+    </text>
+    
+    <path d="M 1260 460 L 1260 485" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- FC Layer 2 -->
+    <rect x="1190" y="485" width="140" height="80" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="1260" y="510" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#cbd5e1" text-anchor="middle">
+      FC Layer 2
+    </text>
+    <text x="1260" y="533" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      Dense(num_classes)
+    </text>
+    <text x="1260" y="548" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      + Softmax
+    </text>
+    
+    <path d="M 1260 565 L 1260 590" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Predictions -->
+    <rect x="1190" y="590" width="140" height="80" rx="8" fill="#065f46" stroke="#10b981" stroke-width="2"/>
+    <text x="1260" y="615" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#6ee7b7" text-anchor="middle">
+      Class Probs
+    </text>
+    <text x="1260" y="638" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+      P(y|x) ∈ ℝ^C
+    </text>
+    <text x="1260" y="655" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">
+      C = num classes
+    </text>
+  </g>
+  
+  <!-- Legend Box -->
+  <g id="legend">
+    <rect x="50" y="800" width="500" height="80" rx="10" fill="#0f172a" stroke="#475569" stroke-width="2" opacity="0.95"/>
+    <text x="70" y="825" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#f1f5f9">
+      🔑 Key Components:
+    </text>
+    
+    <circle cx="70" cy="845" r="6" fill="#3b82f6"/>
+    <text x="85" y="850" font-family="Arial, sans-serif" font-size="11" fill="#cbd5e1">
+      Input Processing
+    </text>
+    
+    <circle cx="200" cy="845" r="6" fill="#8b5cf6"/>
+    <text x="215" y="850" font-family="Arial, sans-serif" font-size="11" fill="#cbd5e1">
+      ResNet CNN
+    </text>
+    
+    <circle cx="320" cy="845" r="6" fill="#ec4899"/>
+    <text x="335" y="850" font-family="Arial, sans-serif" font-size="11" fill="#cbd5e1">
+      GCN Layers
+    </text>
+    
+    <circle cx="70" cy="865" r="6" fill="#f59e0b"/>
+    <text x="85" y="870" font-family="Arial, sans-serif" font-size="11" fill="#cbd5e1">
+      Attention
+    </text>
+    
+    <circle cx="200" cy="865" r="6" fill="#10b981"/>
+    <text x="215" y="870" font-family="Arial, sans-serif" font-size="11" fill="#cbd5e1">
+      Classification
+    </text>
+  </g>
+  
+  <!-- Info Box -->
+  <g id="info">
+    <rect x="600" y="800" width="750" height="80" rx="10" fill="#0f172a" stroke="#475569" stroke-width="2" opacity="0.95"/>
+    <text x="620" y="825" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#f1f5f9">
+      💡 Architecture Highlights:
+    </text>
+    <text x="620" y="845" font-family="Arial, sans-serif" font-size="11" fill="#cbd5e1">
+      • Superpixel-based graph representation for spatial structure preservation
+    </text>
+    <text x="620" y="862" font-family="Arial, sans-serif" font-size="11" fill="#cbd5e1">
+      • ResNet extracts local features → GCN aggregates neighborhood info → Attention focuses on important regions
+    </text>
+  </g>
+</svg>
