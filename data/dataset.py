@@ -1,10 +1,27 @@
+import os
+import torch
 from torch.utils.data import DataLoader, Subset
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
 from sklearn.model_selection import train_test_split
 from typing import Dict, Tuple
 
+class SubsetWithFilenames(torch.utils.data.Dataset):
+    def __init__(self, subset):
+        self.subset = subset
+        self.samples = subset.dataset.samples  # original dataset samples
+        self.indices = subset.indices
 
+    def __len__(self):
+        return len(self.subset)
+
+    def __getitem__(self, idx):
+        img, label = self.subset[idx]  # correct img, label
+        # Use the index mapping inside subset
+        original_idx = self.indices[idx]  # original dataset index
+        filepath = self.samples[original_idx][0]
+        filename = os.path.basename(filepath)
+        return img, label, filename
 
 class Dataset_class:
     """Custom dataset class with stratified splitting."""
@@ -82,25 +99,22 @@ class Dataset_class:
         self,
         split: str,
         batch_size: int,
-        shuffle: bool = False
+        shuffle: bool = False,
+        max_samples: int = None,
+        include_filenames: bool = False
     ) -> DataLoader:
-        """
-        Create DataLoader for specified split.
-        
-        Args:
-            split: One of 'train', 'val', 'test'
-            batch_size: Batch size
-            shuffle: Whether to shuffle data
-            
-        Returns:
-            DataLoader instance
-        """
         assert split in self._splits, f"Invalid split: {split}"
-        
+
         indices = self._splits[split]
+        if max_samples is not None:
+            indices = indices[:max_samples]
+
         subset = Subset(self.dataset, indices)
-        
-        dataloader = DataLoader(
+
+        if include_filenames:
+            subset = SubsetWithFilenames(subset)
+
+        return DataLoader(
             subset,
             batch_size=batch_size,
             shuffle=shuffle,
@@ -108,8 +122,7 @@ class Dataset_class:
             drop_last=self._drop_last,
             pin_memory=True
         )
-        
-        return dataloader
+
     
     def get_split_indices(self, split: str):
         """Get indices for a specific split."""
@@ -137,6 +150,8 @@ def get_dataloaders(
     val_split: float = 0.2,
     test_split: float = 0.2,
     num_workers: int = 4,
+    max_samples: int = None,
+    include_filenames: bool = False,
     **kwargs
 ) -> Tuple[DataLoader, DataLoader, DataLoader, Dataset_class]:
     """
@@ -176,8 +191,8 @@ def get_dataloaders(
     )
     
     # Create dataloaders
-    train_loader = dataset_wrapper.get_dataloader('train', batch_size, shuffle=True)
-    val_loader = dataset_wrapper.get_dataloader('val', batch_size, shuffle=False)
-    test_loader = dataset_wrapper.get_dataloader('test', batch_size, shuffle=False)
+    train_loader = dataset_wrapper.get_dataloader('train', batch_size, shuffle=True, max_samples=max_samples, include_filenames=include_filenames)
+    val_loader = dataset_wrapper.get_dataloader('val', batch_size, shuffle=False, max_samples=max_samples, include_filenames=include_filenames)
+    test_loader = dataset_wrapper.get_dataloader('test', batch_size, shuffle=False, max_samples=max_samples, include_filenames=include_filenames)
     
     return train_loader, val_loader, test_loader, dataset_wrapper
