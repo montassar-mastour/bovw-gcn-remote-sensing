@@ -129,8 +129,6 @@ class CheckpointManager:
             model=model,
             optimizer=optimizer,
             epoch=epoch,
-            loss=metrics.get('loss', 0.0),
-            accuracy=metrics.get('accuracy', 0.0),
             checkpoint_dir=str(self.checkpoint_dir),
             **metrics,
             **kwargs
